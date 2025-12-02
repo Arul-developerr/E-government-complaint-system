@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamil Nadu E-Government Complaint System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5cT3e8qQpYV1p3Jp9p6q9q9q9q9q9q9q9&libraries=places"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #94a3b8;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0fdfa 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .logo-text h1 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 12px;
+            right: 12px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: var(--secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--secondary);
+        }
+
+        /* Form Styles */
+        .form-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .form-header {
+            background: var(--primary);
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .form-header h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .form-progress {
+            display: flex;
+            justify-content: space-between;
+            padding: 24px;
+            background: #f1f5f9;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .progress-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 60%;
+            right: -40%;
+            height: 2px;
+            background: var(--gray);
+            z-index: 1;
+        }
+
+        .progress-step.active:not(:last-child)::after {
+            background: var(--primary);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 8px;
+            z-index: 2;
+        }
+
+        .progress-step.active .step-number {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .progress-step.completed .step-number {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+
+        .progress-step.active .step-label {
+            color: var(--primary);
+        }
+
+        .form-content {
+            padding: 32px;
+        }
+
+        .form-step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 16px;
+        }
+
+        .category-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .category-card.selected {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .category-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .location-controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .nearby-locations {
+            margin-top: 24px;
+        }
+
+        .nearby-locations h4 {
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .nearby-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .location-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .location-card:hover {
+            border-color: var(--primary);
+            background: #f0f9ff;
+        }
+
+        .location-card.active {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .location-icon {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .file-upload {
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+        }
+
+        .file-upload i {
+            font-size: 48px;
+            color: var(--gray);
+            margin-bottom: 16px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Admin Dashboard */
+        .dashboard {
+            padding: 40px 0;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-pending { color: var(--warning); }
+        .stat-progress { color: var(--primary); }
+        .stat-resolved { color: var(--success); }
+        .stat-total { color: var(--dark); }
+
+        .filters {
+            background: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 32px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .complaints-table {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-progress {
+            background: #dbeafe;
+            color: var(--primary);
+        }
+
+        .status-resolved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 16px;
+            margin-right: 8px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 24px;
+            margin-top: 24px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .form-progress {
+                padding: 16px;
+            }
+
+            .step-label {
+                font-size: 12px;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-actions {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .form-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .location-controls {
+                flex-direction: column;
+            }
+
+            .nearby-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Tamil Nadu E-Gov</h1>
+                        <p>Complaint System</p>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#complaint">File Complaint</a></li>
+                        <li><a href="#track">Track Complaint</a></li>
+                        <li><a href="#admin">Admin</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Tamil Nadu E-Government Complaint System</h1>
+            <p>Report issues in your area and help us build a better Tamil Nadu together. Your voice matters!</p>
+            <div class="hero-buttons">
+                <a href="#complaint" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i> File a Complaint
+                </a>
+                <a href="#track" class="btn btn-secondary">
+                    <i class="fas fa-search"></i> Track Complaint
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>How It Works</h2>
+                <p>Our simple process makes it easy to report and track issues in your community</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Pinpoint Location</h3>
+                    <p>Use our interactive map to mark the exact location of the problem</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Upload Evidence</h3>
+                    <p>Add photos or videos to help authorities understand the issue better</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Track Progress</h3>
+                    <p>Monitor your complaint status from submission to resolution</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Complaint Form Section -->
+    <section id="complaint" class="form-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>File a Complaint</h2>
+                <p>Help us improve Tamil Nadu by reporting issues in your area</p>
+            </div>
+            
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Complaint Details</h2>
+                    <p>Step <span id="current-step">1</span> of 5</p>
+                </div>
+                
+                <div class="form-progress">
+                    <div class="progress-step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Category</div>
+                    </div>
+                    <div class="progress-step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Details</div>
+                    </div>
+                    <div class="progress-step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Location</div>
+                    </div>
+                    <div class="progress-step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-label">Media</div>
+                    </div>
+                    <div class="progress-step" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-label">Review</div>
+                    </div>
+                </div>
+                
+                <div class="form-content">
+                    <!-- Step 1: Category -->
+                    <div class="form-step active" id="step-1">
+                        <h3>Select Complaint Category</h3>
+                        <p>Choose the category that best describes your issue</p>
+                        
+                        <div class="category-grid">
+                            <div class="category-card" data-category="roads">
+                                <div class="category-icon">
+                                    <i class="fas fa-road"></i>
+                                </div>
+                                <h4>Roads & Infrastructure</h4>
+                            </div>
+                            <div class="category-card" data-category="water">
+                                <div class="category-icon">
+                                    <i class="fas fa-tint"></i>
+                                </div>
+                                <h4>Water Supply</h4>
+                            </div>
+                            <div class="category-card" data-category="electricity">
+                                <div class="category-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <h4>Electricity</h4>
+                            </div>
+                            <div class="category-card" data-category="sanitation">
+                                <div class="category-icon">
+                                    <i class="fas fa-trash"></i>
+                                </div>
+                                <h4>Sanitation</h4>
+                            </div>
+                            <div class="category-card" data-category="other">
+                                <div class="category-icon">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </div>
+                                <h4>Other</h4>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Details -->
+                    <div class="form-step" id="step-2">
+                        <h3>Complaint Details</h3>
+                        <p>Provide specific information about the issue</p>
+                        
+                        <div class="form-group">
+                            <label for="complaint-title">Complaint Title</label>
+                            <input type="text" id="complaint-title" class="form-control" placeholder="Brief description of the problem">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="complaint-description">Detailed Description</label>
+                            <textarea id="complaint-description" class="form-control" rows="5" placeholder="Please provide as much detail as possible about the issue..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Location -->
+                    <div class="form-step" id="step-3">
+                        <h3>Problem Location</h3>
+                        <p>Pinpoint the exact location on the map or select from nearby locations</p>
+                        
+                        <div class="form-group">
+                            <label for="location-search">Search Location</label>
+                            <input type="text" id="location-search" class="form-control" placeholder="Search for a location in Tamil Nadu...">
+                        </div>
+                        
+                        <div id="map"></div>
+                        
+                        <div class="location-controls">
+                            <button class="btn btn-secondary" id="current-location">
+                                <i class="fas fa-location-arrow"></i> Use Current Location
+                            </button>
+                            <button class="btn btn-secondary" id="reset-marker">
+                                <i class="fas fa-sync-alt"></i> Reset Marker
+                            </button>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 16px;">
+                            <label for="address">Selected Address</label>
+                            <textarea id="address" class="form-control" rows="2" readonly></textarea>
+                        </div>
+                        
+                        <!-- Nearby Locations Section -->
+                        <div class="nearby-locations">
+                            <h4>Popular Locations in Dharmapuri District</h4>
+                            <p>Select one of these common locations if your issue is nearby:</p>
+                            <div class="nearby-grid">
+                                <div class="location-card" data-location="Pennagaram Bus Stand">
+                                    <div class="location-icon">
+                                        <i class="fas fa-bus"></i>
+                                    </div>
+                                    <h5>Pennagaram Bus Stand</h5>
+                                    <p>Bus stand and surrounding areas</p>
+                                </div>
+                                <div class="location-card" data-location="Paruvathana Halli">
+                                    <div class="location-icon">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <h5>Paruvathana Halli</h5>
+                                    <p>Residential area and surroundings</p>
+                                </div>
+                                <div class="location-card" data-location="Dharmapuri City">
+                                    <div class="location-icon">
+                                        <i class="fas fa-city"></i>
+                                    </div>
+                                    <h5>Dharmapuri City</h5>
+                                    <p>City center and main areas</p>
+                                </div>
+                                <div class="location-card" data-location="Dharmapuri Bus Stand">
+                                    <div class="location-icon">
+                                        <i class="fas fa-bus-alt"></i>
+                                    </div>
+                                    <h5>Dharmapuri Bus Stand</h5>
+                                    <p>Main bus terminal and nearby roads</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4: Media -->
+                    <div class="form-step" id="step-4">
+                        <h3>Upload Media</h3>
+                        <p>Add photos or videos as evidence (optional but helpful)</p>
+                        
+                        <div class="file-upload" id="media-upload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h4>Upload Images or Videos</h4>
+                            <p>Drag & drop files here or click to browse</p>
+                            <input type="file" id="file-input" multiple style="display: none;" accept="image/*,video/*">
+                        </div>
+                        
+                        <div id="upload-preview" style="margin-top: 16px;"></div>
+                    </div>
+                    
+                    <!-- Step 5: Review -->
+                    <div class="form-step" id="step-5">
+                        <h3>Review & Submit</h3>
+                        <p>Please review your complaint details before submitting</p>
+                        
+                        <div class="review-summary">
+                            <div class="review-item">
+                                <strong>Category:</strong> <span id="review-category">-</span>
+                            </div>
+                            <div class="review-item">
+                                <strong>Title:</strong> <span id="review-title">-</span>
+                            </div>
+                            <div class="review-item">
+                                <strong>Description:</strong> <span id="review-description">-</span>
+                            </div>
+                            <div class="review-item">
+                                <strong>Location:</strong> <span id="review-location">-</span>
+                            </div>
+                            <div class="review-item">
+                                <strong>Media Files:</strong> <span id="review-media">0 files</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 24px;">
+                            <label for="user-name">Your Name</label>
+                            <input type="text" id="user-name" class="form-control" placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="user-phone">Phone Number</label>
+                            <input type="tel" id="user-phone" class="form-control" placeholder="Enter your phone number">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="user-email">Email Address</label>
+                            <input type="email" id="user-email" class="form-control" placeholder="Enter your email address">
+                        </div>
+                    </div>
+                    
+                    <!-- Form Navigation -->
+                    <div class="form-actions">
+                        <button class="btn btn-secondary" id="prev-btn" disabled>
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="btn btn-primary" id="next-btn">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button class="btn btn-primary" id="submit-btn" style="display: none;">
+                            <i class="fas fa-paper-plane"></i> Submit Complaint
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Dashboard Section -->
+    <section id="admin" class="dashboard">
+        <div class="container">
+            <div class="section-title">
+                <h2>Admin Dashboard</h2>
+                <p>Manage and monitor all citizen complaints</p>
+            </div>
+            
+            <div class="dashboard-header">
+                <h3>Complaint Overview</h3>
+                <button class="btn btn-primary">
+                    <i class="fas fa-download"></i> Export Report
+                </button>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value stat-total">24</div>
+                    <p>Total Complaints</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value stat-pending">12</div>
+                    <p>Pending</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value stat-progress">8</div>
+                    <p>In Progress</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value stat-resolved">4</div>
+                    <p>Resolved</p>
+                </div>
+            </div>
+            
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="status-filter">Status</label>
+                    <select id="status-filter" class="form-control">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="category-filter">Category</label>
+                    <select id="category-filter" class="form-control">
+                        <option value="all">All Categories</option>
+                        <option value="roads">Roads & Infrastructure</option>
+                        <option value="water">Water Supply</option>
+                        <option value="electricity">Electricity</option>
+                        <option value="sanitation">Sanitation</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="date-filter">Date Range</label>
+                    <select id="date-filter" class="form-control">
+                        <option value="all">All Time</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="complaints-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Category</th>
+                            <th>Title</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#COMP001</td>
+                            <td>Roads & Infrastructure</td>
+                            <td>Pothole on Main Road</td>
+                            <td>Pennagaram Bus Stand</td>
+                            <td>2023-06-15</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>
+                                <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#COMP002</td>
+                            <td>Water Supply</td>
+                            <td>No Water Supply for 3 Days</td>
+                            <td>Paruvathana Halli</td>
+                            <td>2023-06-14</td>
+                            <td><span class="status-badge status-progress">In Progress</span></td>
+                            <td>
+                                <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#COMP003</td>
+                            <td>Electricity</td>
+                            <td>Street Light Not Working</td>
+                            <td>Dharmapuri Bus Stand</td>
+                            <td>2023-06-12</td>
+                            <td><span class="status-badge status-resolved">Resolved</span></td>
+                            <td>
+                                <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Tamil Nadu E-Gov</h3>
+                    <p>Helping citizens report issues and improve public services across Tamil Nadu.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#">Home</a>
+                    <a href="#complaint">File Complaint</a>
+                    <a href="#track">Track Complaint</a>
+                    <a href="#admin">Admin</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-phone"></i> 044-23456789</p>
+                    <p><i class="fas fa-envelope"></i> support@tnegov.tn.gov.in</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Chennai, Tamil Nadu</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Tamil Nadu E-Government Complaint System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Form Navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const steps = document.querySelectorAll('.form-step');
+            const progressSteps = document.querySelectorAll('.progress-step');
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            const currentStepEl = document.getElementById('current-step');
+            let currentStep = 1;
+            
+            // Initialize Google Maps
+            initMap();
+            
+            // Category Selection
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    categoryCards.forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Nearby Locations Selection
+            const locationCards = document.querySelectorAll('.location-card');
+            locationCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const locationName = this.getAttribute('data-location');
+                    selectNearbyLocation(locationName);
+                    
+                    // Visual feedback
+                    locationCards.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // File Upload
+            const fileUpload = document.getElementById('media-upload');
+            const fileInput = document.getElementById('file-input');
+            const uploadPreview = document.getElementById('upload-preview');
+            
+            fileUpload.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', function() {
+                uploadPreview.innerHTML = '';
+                if (fileInput.files.length > 0) {
+                    uploadPreview.innerHTML = `<p><i class="fas fa-check-circle" style="color: var(--success);"></i> ${fileInput.files.length} file(s) selected</p>`;
+                }
+            });
+            
+            // Form Navigation
+            nextBtn.addEventListener('click', function() {
+                if (validateStep(currentStep)) {
+                    if (currentStep < steps.length) {
+                        steps[currentStep - 1].classList.remove('active');
+                        progressSteps[currentStep - 1].classList.remove('active');
+                        
+                        currentStep++;
+                        steps[currentStep - 1].classList.add('active');
+                        progressSteps[currentStep - 1].classList.add('active');
+                        progressSteps[currentStep - 2].classList.add('completed');
+                        
+                        updateNavigation();
+                        updateReview();
+                    }
+                }
+            });
+            
+            prevBtn.addEventListener('click', function() {
+                if (currentStep > 1) {
+                    steps[currentStep - 1].classList.remove('active');
+                    progressSteps[currentStep - 1].classList.remove('active');
+                    progressSteps[currentStep - 2].classList.remove('completed');
+                    
+                    currentStep--;
+                    steps[currentStep - 1].classList.add('active');
+                    progressSteps[currentStep - 1].classList.add('active');
+                    
+                    updateNavigation();
+                }
+            });
+            
+            submitBtn.addEventListener('click', function() {
+                if (validateStep(currentStep)) {
+                    // In a real application, you would submit the form data to a server
+                    alert('Complaint submitted successfully! Your complaint ID is #COMP' + Date.now());
+                    resetForm();
+                }
+            });
+            
+            function updateNavigation() {
+                currentStepEl.textContent = currentStep;
+                
+                if (currentStep === 1) {
+                    prevBtn.disabled = true;
+                } else {
+                    prevBtn.disabled = false;
+                }
+                
+                if (currentStep === steps.length) {
+                    nextBtn.style.display = 'none';
+                    submitBtn.style.display = 'inline-flex';
+                } else {
+                    nextBtn.style.display = 'inline-flex';
+                    submitBtn.style.display = 'none';
+                }
+            }
+            
+            function validateStep(step) {
+                switch(step) {
+                    case 1:
+                        const selectedCategory = document.querySelector('.category-card.selected');
+                        if (!selectedCategory) {
+                            alert('Please select a complaint category');
+                            return false;
+                        }
+                        return true;
+                    case 2:
+                        const title = document.getElementById('complaint-title').value;
+                        const description = document.getElementById('complaint-description').value;
+                        if (!title.trim() || !description.trim()) {
+                            alert('Please fill in all required fields');
+                            return false;
+                        }
+                        return true;
+                    case 3:
+                        const address = document.getElementById('address').value;
+                        if (!address.trim()) {
+                            alert('Please select a location on the map or choose from nearby locations');
+                            return false;
+                        }
+                        return true;
+                    case 5:
+                        const name = document.getElementById('user-name').value;
+                        const phone = document.getElementById('user-phone').value;
+                        const email = document.getElementById('user-email').value;
+                        if (!name.trim() || !phone.trim() || !email.trim()) {
+                            alert('Please fill in all contact information');
+                            return false;
+                        }
+                        return true;
+                    default:
+                        return true;
+                }
+            }
+            
+            function updateReview() {
+                // Update review section with form data
+                const selectedCategory = document.querySelector('.category-card.selected');
+                if (selectedCategory) {
+                    document.getElementById('review-category').textContent = selectedCategory.querySelector('h4').textContent;
+                }
+                
+                document.getElementById('review-title').textContent = document.getElementById('complaint-title').value || '-';
+                document.getElementById('review-description').textContent = document.getElementById('complaint-description').value || '-';
+                document.getElementById('review-location').textContent = document.getElementById('address').value || '-';
+                
+                const fileCount = fileInput.files.length;
+                document.getElementById('review-media').textContent = fileCount + ' file(s)';
+            }
+            
+            function resetForm() {
+                // Reset form to initial state
+                currentStep = 1;
+                steps.forEach(step => step.classList.remove('active'));
+                progressSteps.forEach(step => {
+                    step.classList.remove('active', 'completed');
+                });
+                
+                steps[0].classList.add('active');
+                progressSteps[0].classList.add('active');
+                
+                categoryCards.forEach(card => card.classList.remove('selected'));
+                locationCards.forEach(card => card.classList.remove('active'));
+                document.getElementById('complaint-title').value = '';
+                document.getElementById('complaint-description').value = '';
+                document.getElementById('address').value = '';
+                document.getElementById('user-name').value = '';
+                document.getElementById('user-phone').value = '';
+                document.getElementById('user-email').value = '';
+                fileInput.value = '';
+                uploadPreview.innerHTML = '';
+                
+                updateNavigation();
+            }
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav ul');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                if (nav.style.display === 'flex') {
+                    nav.style.display = 'none';
+                } else {
+                    nav.style.display = 'flex';
+                    nav.style.flexDirection = 'column';
+                    nav.style.position = 'absolute';
+                    nav.style.top = '70px';
+                    nav.style.right = '20px';
+                    nav.style.background = 'white';
+                    nav.style.padding = '16px';
+                    nav.style.borderRadius = '8px';
+                    nav.style.boxShadow = 'var(--shadow)';
+                    nav.style.gap = '12px';
+                }
+            });
+        });
+        
+        // Google Maps Integration
+        let map, marker, geocoder, autocomplete;
+        
+        // Nearby locations coordinates for Dharmapuri district
+        const nearbyLocations = {
+            "Pennagaram Bus Stand": { lat: 12.1286, lng: 78.0525 },
+            "Paruvathana Halli": { lat: 12.1350, lng: 78.0650 },
+            "Dharmapuri City": { lat: 12.1270, lng: 78.1579 },
+            "Dharmapuri Bus Stand": { lat: 12.1265, lng: 78.1590 }
+        };
+        
+        function initMap() {
+            // Default to Dharmapuri, Tamil Nadu
+            const defaultLocation = { lat: 12.1270, lng: 78.1579 };
+            
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: defaultLocation,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: true,
+                styles: [
+                    {
+                        featureType: 'administrative',
+                        elementType: 'geometry',
+                        stylers: [{ visibility: 'off' }]
+                    },
+                    {
+                        featureType: 'poi',
+                        stylers: [{ visibility: 'off' }]
+                    },
+                    {
+                        featureType: 'road',
+                        elementType: 'labels.icon',
+                        stylers: [{ visibility: 'off' }]
+                    }
+                ]
+            });
+            
+            marker = new google.maps.Marker({
+                position: defaultLocation,
+                map: map,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                title: 'Problem Location'
+            });
+            
+            geocoder = new google.maps.Geocoder();
+            
+            // Initialize Autocomplete
+            const searchInput = document.getElementById('location-search');
+            autocomplete = new google.maps.places.Autocomplete(searchInput, {
+                types: ['geocode'],
+                componentRestrictions: { country: 'in' }
+            });
+            
+            // Bind autocomplete to map
+            autocomplete.bindTo('bounds', map);
+            
+            autocomplete.addListener('place_changed', function() {
+                const place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    // User entered the name of a Place that was not suggested and
+                    // pressed the Enter key, or the Place Details request failed.
+                    alert("No details available for input: '" + place.name + "'");
+                    return;
+                }
+                
+                // If the place has a geometry, then present it on a map.
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17);
+                }
+                
+                marker.setPosition(place.geometry.location);
+                updateAddress(place.geometry.location);
+                
+                // Clear nearby location selection
+                document.querySelectorAll('.location-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+            });
+            
+            // Marker drag event
+            marker.addListener('dragend', function() {
+                updateAddress(marker.getPosition());
+                
+                // Clear nearby location selection
+                document.querySelectorAll('.location-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+            });
+            
+            // Map click event
+            map.addListener('click', function(e) {
+                marker.setPosition(e.latLng);
+                updateAddress(e.latLng);
+                
+                // Clear nearby location selection
+                document.querySelectorAll('.location-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+            });
+            
+            // Current location button
+            document.getElementById('current-location').addEventListener('click', function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            const pos = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
+                            
+                            map.setCenter(pos);
+                            marker.setPosition(pos);
+                            updateAddress(pos);
+                            
+                            // Clear nearby location selection
+                            document.querySelectorAll('.location-card').forEach(card => {
+                                card.classList.remove('active');
+                            });
+                        },
+                        function() {
+                            alert('Unable to get your current location. Please ensure location services are enabled.');
+                        }
+                    );
+                } else {
+                    alert("Geolocation is not supported by this browser.");
+                }
+            });
+            
+            // Reset marker button
+            document.getElementById('reset-marker').addEventListener('click', function() {
+                map.setCenter(defaultLocation);
+                marker.setPosition(defaultLocation);
+                updateAddress(defaultLocation);
+                
+                // Clear nearby location selection
+                document.querySelectorAll('.location-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+            });
+            
+            // Initial address update
+            updateAddress(defaultLocation);
+        }
+        
+        function updateAddress(latLng) {
+            geocoder.geocode({ location: latLng }, function(results, status) {
+                if (status === 'OK' && results[0]) {
+                    document.getElementById('address').value = results[0].formatted_address;
+                } else {
+                    document.getElementById('address').value = 'Address not found';
+                }
+            });
+        }
+        
+        function selectNearbyLocation(locationName) {
+            if (nearbyLocations[locationName]) {
+                const location = nearbyLocations[locationName];
+                map.setCenter(location);
+                marker.setPosition(location);
+                updateAddress(location);
+                
+                // Update address field with the selected location name
+                document.getElementById('address').value = locationName + ', Dharmapuri District, Tamil Nadu';
+            }
+        }
+    </script>
+</body>
+</html>
